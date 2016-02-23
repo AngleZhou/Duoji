@@ -15,13 +15,13 @@ class DJReminder:DJBaseModel {
     init(date: NSDate) {
         fireDate = date
         super.init()
-        self.setAlert(date)
+        DJReminder.scheduleNotificationAtDate(date)
     }
     override init!(dictionary: [NSObject : AnyObject]!) {
         on = dictionary["on"] as! Bool
         fireDate = dictionary["time"] as! NSDate
         super.init(dictionary: dictionary)
-        self.setAlert(fireDate)
+        DJReminder.scheduleNotificationAtDate(fireDate)
     }
     init(hour: Int, minute: Int) {
         let comp = NSDateComponents()
@@ -31,14 +31,14 @@ class DJReminder:DJBaseModel {
         let date = (NSCalendar.currentCalendar().dateFromComponents(comp))!
         fireDate = date
         super.init()
-        self.setAlert(date)
+        DJReminder.scheduleNotificationAtDate(date)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setAlert(date: NSDate) {
+    class func scheduleNotificationAtDate(date: NSDate) {
         let alert = UILocalNotification()
         alert.alertBody = "该复习了哦"
         alert.fireDate = date;
@@ -51,11 +51,11 @@ class DJReminder:DJBaseModel {
         }
     }
     
-    func cancelNotification() {
+    class func cancelNotificationAtDate(date:NSDate) {
         let notes = UIApplication.sharedApplication().scheduledLocalNotifications
         if notes != nil && notes?.count > 0 {
             for note in notes! {
-                let tInterval = note.fireDate?.timeIntervalSinceDate(self.fireDate)
+                let tInterval = note.fireDate?.timeIntervalSinceDate(date)
                 let tIntervalInt = Int64(tInterval!)
                 if tIntervalInt % (24*60*60) == 0 {
                     UIApplication.sharedApplication().cancelLocalNotification(note)
@@ -63,5 +63,7 @@ class DJReminder:DJBaseModel {
             }
         }
     }
+    
+    
     
 }

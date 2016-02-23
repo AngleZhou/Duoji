@@ -12,7 +12,9 @@ import UIKit
 
 class DJReminderModel: DJBaseModel {
     var reminders = NSMutableArray()
-    override init() {
+    static let sharedInstance = DJReminderModel()
+    
+    private override init() {
         super.init()
         let data = self.loadFromLocal()
         if data == nil {
@@ -47,24 +49,47 @@ class DJReminderModel: DJBaseModel {
     }
     func save() {
         let documentPath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
-        let path = documentPath!.stringByAppendingString("Reminders.plist")
-        self.reminders.writeToFile(path, atomically: true)
+        let path = documentPath!.stringByAppendingString("/Reminders.plist")
+        let newArr = NSMutableArray()
+        for r in self.reminders {
+            let reminder = r as! DJReminder
+            let reDict = reminder.toDictionary()
+            newArr.addObject(reDict)
+        }
+        newArr.writeToFile(path, atomically: true)
     }
+    
     
     func saveReminderAtDate(date:NSDate) {
         self.reminders.addObject(DJReminder(date: date))
         self.save()
     }
+    
     func deleteReminderAtDate(date:NSDate) {
+        let re = self.reminderOfDate(date)
+        if let re = re {
+            DJReminder.cancelNotificationAtDate(re.fireDate)
+            self.reminders.removeObjectIdenticalTo(re)
+        }
+        self.save()
+    }
+    func changeReminderFromDate(date:NSDate, toDate:NSDate) {
+        let re = self.reminderOfDate(date)
+        if let _ = re {
+            self.deleteReminderAtDate(date)
+            self.reminders.addObject(DJReminder(date: toDate))
+        }
+    }
+    
+    func reminderOfDate(date:NSDate)->DJReminder? {
         let remindercopy:NSArray = self.reminders
         let predicate = NSPredicate(format: "SELF.fireDate == %@", date)
         let filteredArr = remindercopy.filteredArrayUsingPredicate(predicate)
         if filteredArr.count > 0 {
             let re = filteredArr.first as! DJReminder
-            re.cancelNotification()
-            self.reminders.removeObjectIdenticalTo(re)
+            return re
         }
-        
-        self.save()
+        return nil
     }
+    
 }

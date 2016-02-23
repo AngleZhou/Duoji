@@ -11,6 +11,8 @@ import UIKit
 class DJReminderDetail: DJBaseVC {
     var isNew: Bool = false
     var date: NSDate?
+    
+    
     private var datePicker: UIDatePicker = UIDatePicker()
     private var btnDelete: UIButton = UIButton()
     
@@ -21,11 +23,25 @@ class DJReminderDetail: DJBaseVC {
     func initUI() {
         self.navigationItem.title = self.isNew ? "新建提醒" : "修改提醒"
         self.view.backgroundColor = DJTheme.kDJColorTableViewbg
-        self.actionCustomLeftBtnWithNrlImage(nil, htlImage: nil, title: "取消") { [weak self]() -> Void in
-            self?.dismissViewControllerAnimated(true, completion: nil)
+        if self.isNew {
+            self.actionCustomLeftBtnWithNrlImage(nil, htlImage: nil, title: "取消") { [weak self]() -> Void in
+                self?.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
         self.actionCustomRightBtnWithNrlImage(nil, htlImage: nil, title: "保存") { [weak self]() -> Void in
             //save
+            if self != nil {
+                if self!.isNew {
+                    DJReminderModel.sharedInstance.saveReminderAtDate(self!.datePicker.date)
+                    self?.dismissViewControllerAnimated(true, completion: nil)
+                }
+                else {
+                    DJReminderModel.sharedInstance.changeReminderFromDate(self!.date!, toDate: self!.datePicker.date)
+                    self?.navigationController?.popViewControllerAnimated(true)
+                }
+                
+            }
+            
         }
         
         self.datePicker.datePickerMode = .Time
@@ -51,7 +67,7 @@ class DJReminderDetail: DJBaseVC {
                 self?.dismissViewControllerAnimated(true, completion: nil)
             }
             else {
-                DJReminderModel().deleteReminderAtDate(self!.date!)
+                DJReminderModel.sharedInstance.deleteReminderAtDate(self!.date!)
                 self?.navigationController?.popViewControllerAnimated(true)
             }
         }
