@@ -30,6 +30,7 @@
 		B227620F1C65EB75000DF815 /* DJAboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227620E1C65EB75000DF815 /* DJAboutVC.swift */; };
 		B22762131C65F934000DF815 /* DJReminderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22762121C65F934000DF815 /* DJReminderVC.swift */; };
 		B22E17451C7860DA00942CA3 /* DJReminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E17441C7860DA00942CA3 /* DJReminder.swift */; };
+		B23801611C7F341F000A60A5 /* DJTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23801601C7F341F000A60A5 /* DJTools.swift */; };
 		B25687031C5A38DE004B83FB /* DJTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25687021C5A38DE004B83FB /* DJTheme.swift */; };
 		B25687211C5B3AD1004B83FB /* DJBaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25687201C5B3AD1004B83FB /* DJBaseModel.swift */; };
 		B26E38161C5F98D000124AAB /* DJSignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26E38151C5F98D000124AAB /* DJSignupVC.swift */; };
@@ -97,6 +98,7 @@
 		B227620E1C65EB75000DF815 /* DJAboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJAboutVC.swift; path = "我/Controller/DJAboutVC.swift"; sourceTree = "<group>"; };
 		B22762121C65F934000DF815 /* DJReminderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJReminderVC.swift; path = "提醒/Controller/DJReminderVC.swift"; sourceTree = "<group>"; };
 		B22E17441C7860DA00942CA3 /* DJReminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJReminder.swift; sourceTree = "<group>"; };
+		B23801601C7F341F000A60A5 /* DJTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJTools.swift; path = "工具/DJTools.swift"; sourceTree = "<group>"; };
 		B25687021C5A38DE004B83FB /* DJTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJTheme.swift; sourceTree = "<group>"; };
 		B25687201C5B3AD1004B83FB /* DJBaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJBaseModel.swift; path = "基类/Model/DJBaseModel.swift"; sourceTree = "<group>"; };
 		B26E38151C5F98D000124AAB /* DJSignupVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJSignupVC.swift; path = "登录/Controller/DJSignupVC.swift"; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 		060C9B6B1C361B1E005DB9B5 /* Duoji */ = {
 			isa = PBXGroup;
 			children = (
+				B238015F1C7F33E8000A60A5 /* 工具 */,
 				B2CB14AF1C7843DF0071B772 /* Category */,
 				B25687051C5A4BE6004B83FB /* 图标 */,
 				06ABEF001C40E16D00EFB5B6 /* 业务 */,
@@ -230,7 +233,6 @@
 				06ABEF011C40E25300EFB5B6 /* DJConstant.swift */,
 				B25687021C5A38DE004B83FB /* DJTheme.swift */,
 				B20EEBFB1C4A48D400B00AD9 /* ObjectWrapper.swift */,
-				B20EEBFD1C4A6D5900B00AD9 /* UIViewUtils.swift */,
 				060C9B701C361B1E005DB9B5 /* Main.storyboard */,
 				060C9B731C361B1E005DB9B5 /* Assets.xcassets */,
 				060C9B751C361B1E005DB9B5 /* LaunchScreen.storyboard */,
@@ -319,7 +321,6 @@
 			isa = PBXGroup;
 			children = (
 				B22762101C65F8C2000DF815 /* 提醒 */,
-				B290B3B01C60B1E000F2F78C /* 工具 */,
 				B25687241C5B4583004B83FB /* 登录 */,
 				060ABC551C3F5B0A00ADD6F9 /* 笔记 */,
 				060ABC061C37819300ADD6F9 /* 我 */,
@@ -391,6 +392,16 @@
 			name = Controller;
 			sourceTree = "<group>";
 		};
+		B238015F1C7F33E8000A60A5 /* 工具 */ = {
+			isa = PBXGroup;
+			children = (
+				B20EEBFD1C4A6D5900B00AD9 /* UIViewUtils.swift */,
+				B23801601C7F341F000A60A5 /* DJTools.swift */,
+				B290B3B31C61E6A000F2F78C /* String + Size.swift */,
+			);
+			name = "工具";
+			sourceTree = "<group>";
+		};
 		B25687051C5A4BE6004B83FB /* 图标 */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,14 +436,6 @@
 				B26E38151C5F98D000124AAB /* DJSignupVC.swift */,
 			);
 			name = Controller;
-			sourceTree = "<group>";
-		};
-		B290B3B01C60B1E000F2F78C /* 工具 */ = {
-			isa = PBXGroup;
-			children = (
-				B290B3B31C61E6A000F2F78C /* String + Size.swift */,
-			);
-			name = "工具";
 			sourceTree = "<group>";
 		};
 		B290B3BB1C6333B100F2F78C /* View */ = {
@@ -683,6 +686,7 @@
 				B2BFB5B91C71F367000B6C82 /* DJReminderModel.swift in Sources */,
 				060ABC5C1C3F5C2E00ADD6F9 /* DJTweetsVC.swift in Sources */,
 				B26E38161C5F98D000124AAB /* DJSignupVC.swift in Sources */,
+				B23801611C7F341F000A60A5 /* DJTools.swift in Sources */,
 				B290B3B61C621B1900F2F78C /* DJTweetDetailVC.swift in Sources */,
 				060ABC4C1C3F5A1E00ADD6F9 /* DJUser.swift in Sources */,
 				B2BFB5B61C71F127000B6C82 /* DJReminderCell.swift in Sources */,

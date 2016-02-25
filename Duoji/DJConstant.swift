@@ -16,6 +16,7 @@ let kDJScreenWidth            = UIScreen.mainScreen().bounds.size.width
 let kDJScreenHeight           = UIScreen.mainScreen().bounds.size.height
 let kDJTableViewSpace:CGFloat = 10
 let kDJButtonHeight: CGFloat  = 44
+let kDJLineSpace: CGFloat     = 5
 
 let kNotifyBadNetwork = "kNotifyBadNetwork"
 func __notify(noteName:String) {NSNotificationCenter.defaultCenter().postNotificationName(noteName, object: nil)}
