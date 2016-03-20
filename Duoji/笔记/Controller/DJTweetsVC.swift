@@ -21,12 +21,8 @@ class DJTweetsVC: DJBaseTableVC {
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "笔记"
         self.btnAdd = DJTheme.getIconFont("\u{e605}", size: 48.0)
-//        DJTheme.setIconFont(self.btnAdd, iconName: "\u{e605}", size: 48)
-//        self.btnAdd.setTitle("\u{e605}", forState: UIControlState.Normal) //DJTheme.getIconFont(, size: 48.0)
         self.btnAdd.textColor = DJTheme.kDJColorMain
-        
-        self.btnAdd.backgroundColor = UIColor.greenColor()
-//        self.btnAdd.titleLabel?.textColor = DJTheme.kDJColorMain
+        self.btnAdd.backgroundColor = UIColor.whiteColor()
         self.btnAdd.layer.cornerRadius = 24
         self.btnAdd.layer.masksToBounds = true
         self.view.addSubview(self.btnAdd)
@@ -35,12 +31,8 @@ class DJTweetsVC: DJBaseTableVC {
             make.bottom.equalTo(self!.view).offset(-20.0)
             make.size.equalTo(CGSizeMake(48.0, 48.0))
         }
-//        self.btnAdd.layer.zPosition = 2
-        self.view.bringSubviewToFront(self.btnAdd)
-//
         self.btnAdd.userInteractionEnabled = true
         let tapAdd = UITapGestureRecognizer(target: self, action: "newTweet:")
-        
         self.btnAdd.addGestureRecognizer(tapAdd)
         
         self.loadTweets()
@@ -62,6 +54,7 @@ class DJTweetsVC: DJBaseTableVC {
     }
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.view.bringSubviewToFront(self.btnAdd)
         self.tableView.reloadData()
     }
     

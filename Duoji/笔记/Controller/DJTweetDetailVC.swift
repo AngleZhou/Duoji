@@ -26,10 +26,10 @@ class DJTweetDetailVC: DJBaseVC {
         textView!.font = DJTheme.kDJFontText
         
         self.actionCustomRightBtnWithNrlImage(nil, htlImage: nil, title: "保存") { [weak self] in
-            self?.showLoading()
+            self!.showLoading()
             if self!.isNew {
                 DJTweetsModel.createTweet(self!.textView!.text!, success: { (result) -> Void in
-                        print(result)
+                    print(result)
                     self?.hideLoading()
                     self?.navigationController?.popViewControllerAnimated(true)
                     }, failure: { (requestErr) -> Void in
@@ -47,7 +47,6 @@ class DJTweetDetailVC: DJBaseVC {
                         self?.hideLoading()
                 })
             }
-            
         }
     }
 }
