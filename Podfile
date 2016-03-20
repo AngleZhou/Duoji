@@ -13,5 +13,6 @@ pod 'SnapKit', '~> 0.19.1'
 pod 'ReactiveCocoa', '~> 4.0.0'
 pod 'MBProgressHUD'
 pod 'IQKeyboardManagerSwift', '~> 3.3.4'
+pod 'MJRefresh', '~> 3.0.7'
 
 pod 'Reveal-iOS-SDK', :configurations => ['Debug']

@@ -19,7 +19,7 @@ struct DJUrls {
     
     
     static let tweet = String(format: "%@tweets?", api)
-    static func tweet(id id: Int)->String {
-        return String(format: "%@tweets/%d?", api,id)
+    static func tweet(uuid uuid: String)->String {
+        return String(format: "%@tweets/%@?", api, uuid)
     }
 };

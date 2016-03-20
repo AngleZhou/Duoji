@@ -38,7 +38,8 @@ class DJTweetDetailVC: DJBaseVC {
                 })
             }
             else {
-                DJTweetsModel.updateTweet(id: self!.tweet!.id!, content: self!.textView!.text!, success: { (result) -> Void in
+                DJTweetsModel.updateTweet(uuid: self!.tweet!.uuid, content: self!.textView!.text!, success: { (result) -> Void in
+                    self!.tweet!.content = self!.textView!.text!
                     self?.hideLoading()
                     self?.navigationController?.popViewControllerAnimated(true)
                     }, failure: { (requestErr) -> Void in

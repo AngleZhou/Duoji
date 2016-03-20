@@ -11,13 +11,38 @@ import JSONModel
 
 class DJTweetsVC: DJBaseTableVC {
     
+    var btnAdd:UILabel!
+    
     var tweets: [DJTweet]?
     
 
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "笔记"
+        self.btnAdd = DJTheme.getIconFont("\u{e605}", size: 48.0)
+//        DJTheme.setIconFont(self.btnAdd, iconName: "\u{e605}", size: 48)
+//        self.btnAdd.setTitle("\u{e605}", forState: UIControlState.Normal) //DJTheme.getIconFont(, size: 48.0)
+        self.btnAdd.textColor = DJTheme.kDJColorMain
+        
+        self.btnAdd.backgroundColor = UIColor.greenColor()
+//        self.btnAdd.titleLabel?.textColor = DJTheme.kDJColorMain
+        self.btnAdd.layer.cornerRadius = 24
+        self.btnAdd.layer.masksToBounds = true
+        self.view.addSubview(self.btnAdd)
+        self.btnAdd.snp_makeConstraints { [weak self](make) -> Void in
+            make.trailing.equalTo(self!.view).offset(-20.0)
+            make.bottom.equalTo(self!.view).offset(-20.0)
+            make.size.equalTo(CGSizeMake(48.0, 48.0))
+        }
+//        self.btnAdd.layer.zPosition = 2
+        self.view.bringSubviewToFront(self.btnAdd)
+//
+        self.btnAdd.userInteractionEnabled = true
+        let tapAdd = UITapGestureRecognizer(target: self, action: "newTweet:")
+        
+        self.btnAdd.addGestureRecognizer(tapAdd)
+        
         self.loadTweets()
         //搜索
 //        self.actionCustomLeftBtnWithNrlImage(nil, htlImage: nil, title: "搜索", action: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
@@ -30,6 +55,16 @@ class DJTweetsVC: DJBaseTableVC {
 
     }
     
+    func newTweet(sender:UITapGestureRecognizer) {
+        let newVC = DJTweetDetailVC()
+        newVC.isNew = true
+        self.navigationController?.pushViewController(newVC, animated: true)
+    }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
+    }
+    
     func right() {
         
     }
@@ -39,7 +74,6 @@ class DJTweetsVC: DJBaseTableVC {
             let arr = result!["data"] as! Array<[String:AnyObject]>
             let test = arr[0] as [String:AnyObject]
             let model: DJTweetsModel?
-//            do {
                 model =  DJTweetsModel.init(dictionary: result)
                 if model!.success == 1 {
                     self!.tweets = model!.data
@@ -49,10 +83,6 @@ class DJTweetsVC: DJBaseTableVC {
                 else {
                     TOAST_MSG(model!.errorMsg!)
                 }
-//            } catch _ {
-//                model = nil
-//                TOAST_MSG("model初始化失败")
-//            }
             
             
             }) { (requestErr) -> Void in
@@ -81,6 +111,7 @@ class DJTweetsVC: DJBaseTableVC {
             let data = arr[indexPath.row]
             cell?.title = data.content
         }
+        
     
         return cell!
     }

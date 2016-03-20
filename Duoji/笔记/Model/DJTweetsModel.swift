@@ -37,12 +37,12 @@ class DJTweetsModel: DJBaseModel {
     class func getTweets(success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
         DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet, parasDict: ["isGet":true], success: success, failure: failure)
     }
-    class func deleteTweet(id id: Int, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
-        DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(id: id), parasDict:["isDelete":true], success: success, failure: failure)
+    class func deleteTweet(uuid uuid: String, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
+        DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(uuid: uuid), parasDict:["isDelete":true], success: success, failure: failure)
     }
-    class func updateTweet(id id: Int, content: String, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
+    class func updateTweet(uuid uuid: String, content: String, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
         let dic = ["isUpdate":true, "content": content] as [String : AnyObject]
-        DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(id: id), parasDict: dic, success: success, failure: failure)
+        DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(uuid: uuid), parasDict: dic, success: success, failure: failure)
     }
     class func createTweet(content: String,success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
         let dic = ["isCreate":true, "content": content] as [String : AnyObject]
