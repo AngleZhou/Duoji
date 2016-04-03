@@ -26,10 +26,12 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     }
     
     func initUI() {
-        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self]() -> Void in
+        let header:MJRefreshStateHeader = MJRefreshNormalHeader(refreshingBlock: { [weak self]() -> Void in
             self?.loadTweets()
         })
-        
+        header.lastUpdatedTimeLabel?.hidden = true
+        header.stateLabel?.hidden = true
+        self.tableView.mj_header = header as MJRefreshHeader
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "笔记"
         self.btnAdd = DJTheme.getIconFont("\u{e605}", size: 48.0)
