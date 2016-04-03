@@ -26,6 +26,7 @@
 		06ABEF0C1C40FD9E00EFB5B6 /* DJBaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ABEF0B1C40FD9E00EFB5B6 /* DJBaseTableViewCell.swift */; };
 		7CBBE0851C9E8CE800ACC072 /* iconfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CBBE0841C9E8CE800ACC072 /* iconfont.ttf */; };
 		7CEF58F91CAF9DC000DD6029 /* DJReturnDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF58F81CAF9DC000DD6029 /* DJReturnDelegate.swift */; };
+		7CEF58FB1CB132D200DD6029 /* DJDelete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF58FA1CB132D200DD6029 /* DJDelete.swift */; };
 		B20EEBFC1C4A48D400B00AD9 /* ObjectWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20EEBFB1C4A48D400B00AD9 /* ObjectWrapper.swift */; };
 		B20EEBFE1C4A6D5900B00AD9 /* UIViewUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20EEBFD1C4A6D5900B00AD9 /* UIViewUtils.swift */; };
 		B227620F1C65EB75000DF815 /* DJAboutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B227620E1C65EB75000DF815 /* DJAboutVC.swift */; };
@@ -94,6 +95,7 @@
 		238160FDDB78E807167AF4F3 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		7CBBE0841C9E8CE800ACC072 /* iconfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = iconfont.ttf; sourceTree = "<group>"; };
 		7CEF58F81CAF9DC000DD6029 /* DJReturnDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJReturnDelegate.swift; path = "基类/Model/DJReturnDelegate.swift"; sourceTree = "<group>"; };
+		7CEF58FA1CB132D200DD6029 /* DJDelete.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJDelete.swift; sourceTree = "<group>"; };
 		B20EEBFB1C4A48D400B00AD9 /* ObjectWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectWrapper.swift; sourceTree = "<group>"; };
 		B20EEBFD1C4A6D5900B00AD9 /* UIViewUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewUtils.swift; sourceTree = "<group>"; };
 		B227620E1C65EB75000DF815 /* DJAboutVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DJAboutVC.swift; path = "我/Controller/DJAboutVC.swift"; sourceTree = "<group>"; };
@@ -467,6 +469,7 @@
 			isa = PBXGroup;
 			children = (
 				B2CB14B01C7843F60071B772 /* NSDate+Description.swift */,
+				7CEF58FA1CB132D200DD6029 /* DJDelete.swift */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				060ABC5E1C3F5CE400ADD6F9 /* DJTweetCell.swift in Sources */,
 				B227620F1C65EB75000DF815 /* DJAboutVC.swift in Sources */,
 				060ABC451C3F59EB00ADD6F9 /* DJMeVC.swift in Sources */,
+				7CEF58FB1CB132D200DD6029 /* DJDelete.swift in Sources */,
 				B290B3B41C61E6A000F2F78C /* String + Size.swift in Sources */,
 				B2BFB5B91C71F367000B6C82 /* DJReminderModel.swift in Sources */,
 				060ABC5C1C3F5C2E00ADD6F9 /* DJTweetsVC.swift in Sources */,

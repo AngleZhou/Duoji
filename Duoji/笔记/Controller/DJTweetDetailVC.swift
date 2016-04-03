@@ -31,34 +31,55 @@ class DJTweetDetailVC: DJBaseVC {
         textView!.text = tweet?.content
         textView!.font = DJTheme.kDJFontText
         
-        self.actionCustomRightBtnWithNrlImage(nil, htlImage: nil, title: "保存") { [weak self] in
-            self!.showLoading()
-            if self!.isNew {
-                DJTweetsModel.createTweet(self!.textView!.text!, success: { (result: [String : AnyObject]?) -> Void in
-                    print(result)
-                    self?.hideLoading()
-                    if let result = result {
-                        let data = result["data"] as! NSDictionary
-                        let tweet = DJTweet.init(dictionary: data as [NSObject : AnyObject])
-                        self?.delegate?.DJTweetReturn(tweet)
-                        self?.navigationController?.popViewControllerAnimated(true)
-                    }
-                    
-                    }, failure: { (requestErr) -> Void in
-                        TOAST_ERROR(requestErr!)
-                        self?.hideLoading()
-                })
-            }
-            else {
-                DJTweetsModel.updateTweet(uuid: self!.tweet!.uuid, content: self!.textView!.text!, success: { (result) -> Void in
-                    self!.tweet!.content = self!.textView!.text!
-                    self?.hideLoading()
+        let btnSave = self.addbtnSave()
+        let btnDelete = self.addbtnDelete()
+        let rightBtns = self.isNew ? [btnSave] : [btnSave, btnDelete]
+        self.navigationItem.rightBarButtonItems = rightBtns
+    }
+    
+    func addbtnSave()->UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveTweet")
+    }
+    func saveTweet() {
+        self.showLoading()
+        if self.isNew {
+            DJTweetsModel.createTweet(self.textView!.text!, success: { [weak self](result: [String : AnyObject]?) -> Void in
+                print(result)
+                self?.hideLoading()
+                if let result = result {
+                    let data = result["data"] as! NSDictionary
+                    let tweet = DJTweet.init(dictionary: data as [NSObject : AnyObject])
+                    self?.delegate?.DJTweetReturn(tweet)
                     self?.navigationController?.popViewControllerAnimated(true)
-                    }, failure: { (requestErr) -> Void in
-                        TOAST_ERROR(requestErr!)
-                        self?.hideLoading()
-                })
-            }
+                }
+                
+                }, failure: { [weak self](requestErr) -> Void in
+                    TOAST_ERROR(requestErr!)
+                    self?.hideLoading()
+            })
+        }
+        else {
+            DJTweetsModel.updateTweet(uuid: self.tweet!.uuid, content: self.textView!.text!, success: { [weak self](result) -> Void in
+                self!.tweet!.content = self!.textView!.text!
+                self?.hideLoading()
+                self?.navigationController?.popViewControllerAnimated(true)
+                }, failure: {[weak self] (requestErr) -> Void in
+                    TOAST_ERROR(requestErr!)
+                    self?.hideLoading()
+            })
+        }
+    }
+    func addbtnDelete()->UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Trash, target: self, action: "deleteTweet")
+    }
+    func deleteTweet() {
+        self.showLoading()
+        DJTweetsModel.deleteTweet(tweet: self.tweet!, success: { [weak self](result) -> Void in
+            self?.hideLoading()
+            self?.navigationController?.popViewControllerAnimated(true)
+            }) { [weak self](requestErr) -> Void in
+                TOAST_ERROR(requestErr!)
+                self?.hideLoading()
         }
     }
 }

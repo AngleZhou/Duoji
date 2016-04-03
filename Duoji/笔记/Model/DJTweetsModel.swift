@@ -23,6 +23,7 @@ class DJTweet: DJBaseModel {
 }
 
 class DJTweetsModel: DJBaseModel {
+    static let sharedInstance = DJTweetsModel()
     var data:[DJTweet]?
     
 //    override class func protocolForArrayProperty(propertyName: String!) -> String! {
@@ -37,8 +38,11 @@ class DJTweetsModel: DJBaseModel {
     class func getTweets(success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
         DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet, parasDict: ["isGet":true], success: success, failure: failure)
     }
-    class func deleteTweet(uuid uuid: String, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
-        DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(uuid: uuid), parasDict:["isDelete":true], success: success, failure: failure)
+
+    class func deleteTweet(tweet tweet: DJTweet, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
+        self.sharedInstance.data!.removeObject(tweet)
+
+        DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(uuid: tweet.uuid), parasDict:["isDelete":true], success: success, failure: failure)
     }
     class func updateTweet(uuid uuid: String, content: String, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
         let dic = ["isUpdate":true, "content": content] as [String : AnyObject]

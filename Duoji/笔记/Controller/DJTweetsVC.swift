@@ -13,9 +13,6 @@ import MJRefresh
 class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     var btnAdd:UILabel!
-    
-    var tweets: [DJTweet]?
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +70,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
             let model: DJTweetsModel?
                 model =  DJTweetsModel.init(dictionary: result)
                 if model!.success == 1 {
-                    self!.tweets = model!.data
+                    DJTweetsModel.sharedInstance.data = model!.data
                     self!.navigationItem.title = String.init(format: "笔记(%d)", model!.data!.count)
                     self!.tableView.reloadData()
                 }
@@ -89,7 +86,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     //MARK: - TweetDelegate
     func DJTweetReturn(tweet: DJTweet) {
-        self.tweets?.insert(tweet, atIndex: 0)
+        DJTweetsModel.sharedInstance.data?.insert(tweet, atIndex: 0)
         self.tableView.reloadData()
     }
     
@@ -99,7 +96,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
         return 1
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let arr = self.tweets {
+        if let arr = DJTweetsModel.sharedInstance.data {
             return arr.count
         }
         return 0
@@ -113,7 +110,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
         if cell == nil {
             cell = DJTweetCell(style: .Default, reuseIdentifier: identifier)
         }
-        if let arr = tweets {
+        if let arr = DJTweetsModel.sharedInstance.data {
             let data = arr[indexPath.row]
             cell?.title = data.content
         }
@@ -134,7 +131,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let detailvc = DJTweetDetailVC()
-        let test = self.tweets![indexPath.row]
+        let test = DJTweetsModel.sharedInstance.data![indexPath.row]
         detailvc.tweet = test
         detailvc.isNew = false
         self.navigationController?.pushViewController(detailvc, animated: true)
