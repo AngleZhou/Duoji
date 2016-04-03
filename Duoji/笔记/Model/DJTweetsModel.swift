@@ -44,7 +44,7 @@ class DJTweetsModel: DJBaseModel {
         let dic = ["isUpdate":true, "content": content] as [String : AnyObject]
         DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet(uuid: uuid), parasDict: dic, success: success, failure: failure)
     }
-    class func createTweet(content: String,success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
+    class func createTweet(content: String, success: DJNetworkSuccessBlock, failure: DJNetworkFailureBlock) {
         let dic = ["isCreate":true, "content": content] as [String : AnyObject]
         DJNetWorkApi.sharedInstance.requestWithURL(DJUrls.tweet, parasDict: dic, success: success, failure: failure)
     }

@@ -9,7 +9,7 @@
 import UIKit
 import JSONModel
 
-class DJTweetsVC: DJBaseTableVC {
+class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     var btnAdd:UILabel!
     
@@ -44,12 +44,13 @@ class DJTweetsVC: DJBaseTableVC {
             self!.navigationController?.pushViewController(meVc, animated: true)
         }
 
-
     }
+
     
     func newTweet(sender:UITapGestureRecognizer) {
         let newVC = DJTweetDetailVC()
         newVC.isNew = true
+        newVC.delegate = self
         self.navigationController?.pushViewController(newVC, animated: true)
     }
     override func viewWillAppear(animated: Bool) {
@@ -64,8 +65,6 @@ class DJTweetsVC: DJBaseTableVC {
     
     func loadTweets() {
         DJTweetsModel.getTweets({ [weak self](result: [String : AnyObject]?) -> Void in
-            let arr = result!["data"] as! Array<[String:AnyObject]>
-            let test = arr[0] as [String:AnyObject]
             let model: DJTweetsModel?
                 model =  DJTweetsModel.init(dictionary: result)
                 if model!.success == 1 {
@@ -81,6 +80,12 @@ class DJTweetsVC: DJBaseTableVC {
             }) { (requestErr) -> Void in
                 TOAST_ERROR(requestErr!)
         }
+    }
+    
+    //MARK: - TweetDelegate
+    func DJTweetReturn(tweet: DJTweet) {
+        self.tweets?.append(tweet)
+        self.tableView.reloadData()
     }
     
     //MARK: - TableView
