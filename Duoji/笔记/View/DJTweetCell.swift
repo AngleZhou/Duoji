@@ -16,12 +16,15 @@ let sideTitleY: CGFloat = 11
 class DJTweetCell: UITableViewCell {
     var title: String? {
         didSet {
-            lbltitle?.text = title
+            if let title = title {
+                lbltitle?.text = title
+                
+                let size = title.size(maxSize: CGSize(width: kDJScreenWidth-sideX*2-sideTitleX*2, height: 999), font: lbltitle!.font, lineBreakMode: NSLineBreakMode.ByWordWrapping)
+                lbltitle?.height = size.height
+                bgView?.height = lbltitle!.height + sideTitleY*2
+                self.height = lbltitle!.height + sideTitleY*2 + sideY*2
+            }
             
-            let size = title!.size(maxSize: CGSize(width: kDJScreenWidth-sideX*2-sideTitleX*2, height: 999), font: lbltitle!.font, lineBreakMode: NSLineBreakMode.ByWordWrapping)
-            lbltitle?.height = size.height
-            bgView?.height = lbltitle!.height + sideTitleY*2
-            self.height = lbltitle!.height + sideTitleY*2 + sideY*2
         }
     }
     var bgView: UIView?

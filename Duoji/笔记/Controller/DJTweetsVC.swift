@@ -20,7 +20,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.initUI()
         self.loadTweets()
         //搜索
 //        self.actionCustomLeftBtnWithNrlImage(nil, htlImage: nil, title: "搜索", action: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
@@ -104,9 +104,9 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
         }
         return 0
     }
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = MJRefreshNormalHeader
-    }
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = MJRefreshNormalHeader
+//    }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let identifier = "DJTweetCell"
         var cell : DJTweetCell? = tableView.dequeueReusableCellWithIdentifier(identifier) as? DJTweetCell
