@@ -8,12 +8,18 @@
 
 import UIKit
 
+protocol DJTweetReturnDelegate {
+    func DJTweetReturn(tweet: DJTweet);
+}
+
+
 class DJTweetDetailVC: DJBaseVC {
     
     var textView: UITextView?
     
     var tweet: DJTweet?
     var isNew: Bool = false
+    var delegate: DJTweetReturnDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +34,13 @@ class DJTweetDetailVC: DJBaseVC {
         self.actionCustomRightBtnWithNrlImage(nil, htlImage: nil, title: "保存") { [weak self] in
             self!.showLoading()
             if self!.isNew {
-                DJTweetsModel.createTweet(self!.textView!.text!, success: { (result) -> Void in
+                DJTweetsModel.createTweet(self!.textView!.text!, success: { (result: [String : AnyObject]?) -> Void in
                     print(result)
                     self?.hideLoading()
+                    let model: DJTweetsModel
+                    model =  DJTweetsModel.init(dictionary: result)
+                    self!.tweet = model.data?.first
+                    self?.delegate?.DJTweetReturn((self?.tweet)!)
                     self?.navigationController?.popViewControllerAnimated(true)
                     }, failure: { (requestErr) -> Void in
                         TOAST_ERROR(requestErr!)
