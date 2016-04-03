@@ -38,7 +38,7 @@ class DJTweetDetailVC: DJBaseVC {
     }
     
     func addbtnSave()->UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Save, target: self, action: "saveTweet")
+        return UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: "saveTweet")
     }
     func saveTweet() {
         self.showLoading()
@@ -70,13 +70,22 @@ class DJTweetDetailVC: DJBaseVC {
         }
     }
     func addbtnDelete()->UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Trash, target: self, action: "deleteTweet")
+        return UIBarButtonItem(title: "删除", style: UIBarButtonItemStyle.Plain, target: self, action: "deleteTweet")
     }
     func deleteTweet() {
         self.showLoading()
         DJTweetsModel.deleteTweet(tweet: self.tweet!, success: { [weak self](result) -> Void in
-            self?.hideLoading()
-            self?.navigationController?.popViewControllerAnimated(true)
+            let model = DJBaseModel(dictionary: result)
+            if model.success == 1 {
+                self?.hideLoading()
+                self?.navigationController?.popViewControllerAnimated(true)
+            }
+            else {
+                TOAST_MSG(model.error_msg!)
+                self?.hideLoading()
+            }
+            
+            
             }) { [weak self](requestErr) -> Void in
                 TOAST_ERROR(requestErr!)
                 self?.hideLoading()

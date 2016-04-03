@@ -13,7 +13,8 @@ import MJRefresh
 class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     var btnAdd:UILabel!
-
+    var refreshHeader:MJRefreshNormalHeader?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,6 +26,10 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     }
     
     func initUI() {
+        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { [weak self]() -> Void in
+            self?.loadTweets()
+        })
+        
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "笔记"
         self.btnAdd = DJTheme.getIconFont("\u{e605}", size: 48.0)
@@ -58,6 +63,10 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.view.bringSubviewToFront(self.btnAdd)
+        if DJTweetsModel.sharedInstance.data != nil {
+            self.navigationItem.title = String.init(format: "笔记(%d)", DJTweetsModel.sharedInstance.data!.count)
+        }
+        
         self.tableView.reloadData()
     }
     
@@ -67,6 +76,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     func loadTweets() {
         DJTweetsModel.getTweets({ [weak self](result: [String : AnyObject]?) -> Void in
+            self?.tableView.mj_header.endRefreshing()
             let model: DJTweetsModel?
                 model =  DJTweetsModel.init(dictionary: result)
                 if model!.success == 1 {
@@ -75,12 +85,13 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
                     self!.tableView.reloadData()
                 }
                 else {
-                    TOAST_MSG(model!.errorMsg!)
+                    TOAST_MSG(model!.error_msg!)
                 }
             
             
-            }) { (requestErr) -> Void in
+            }) { [weak self](requestErr) -> Void in
                 TOAST_ERROR(requestErr!)
+                self?.tableView.mj_header.endRefreshing()
         }
     }
     
@@ -101,9 +112,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
         }
         return 0
     }
-//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = MJRefreshNormalHeader
-//    }
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let identifier = "DJTweetCell"
         var cell : DJTweetCell? = tableView.dequeueReusableCellWithIdentifier(identifier) as? DJTweetCell

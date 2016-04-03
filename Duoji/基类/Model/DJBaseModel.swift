@@ -12,7 +12,7 @@ import jastor
 
 class DJBaseModel: Jastor {
     var success: Int = 0
-    var errorMsg: String?
+    var error_msg: String?
     
 //    override class func propertyIsOptional(propertyName: String!) -> Bool {
 //        return true

@@ -37,7 +37,7 @@ class DJNetWorkApi: NSObject {
         }
         else {
             requestURL = url
-        }
+        } 
         requestURL = String(format: "%@auth_token=%@", requestURL, DJUser.authToken()!)
         self.request(requestURL, parasDict: parasDict, success: success, failure: failure)
    
