@@ -37,9 +37,13 @@ class DJTweetDetailVC: DJBaseVC {
                 DJTweetsModel.createTweet(self!.textView!.text!, success: { (result: [String : AnyObject]?) -> Void in
                     print(result)
                     self?.hideLoading()
-                    self!.tweet = DJTweet.init(dictionary: result)
-                    self?.delegate?.DJTweetReturn((self?.tweet)!)
-                    self?.navigationController?.popViewControllerAnimated(true)
+                    if let result = result {
+                        let data = result["data"] as! NSDictionary
+                        let tweet = DJTweet.init(dictionary: data as [NSObject : AnyObject])
+                        self?.delegate?.DJTweetReturn(tweet)
+                        self?.navigationController?.popViewControllerAnimated(true)
+                    }
+                    
                     }, failure: { (requestErr) -> Void in
                         TOAST_ERROR(requestErr!)
                         self?.hideLoading()

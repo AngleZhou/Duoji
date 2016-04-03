@@ -89,7 +89,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
     
     //MARK: - TweetDelegate
     func DJTweetReturn(tweet: DJTweet) {
-        self.tweets?.append(tweet)
+        self.tweets?.insert(tweet, atIndex: 0)
         self.tableView.reloadData()
     }
     
@@ -99,7 +99,7 @@ class DJTweetsVC: DJBaseTableVC, DJTweetReturnDelegate {
         return 1
     }
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let arr = tweets {
+        if let arr = self.tweets {
             return arr.count
         }
         return 0
