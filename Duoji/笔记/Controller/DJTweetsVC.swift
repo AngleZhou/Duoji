@@ -8,6 +8,7 @@
 
 import UIKit
 import JSONModel
+import MJRefresh
 
 class DJTweetsVC: DJBaseTableVC {
     
@@ -18,6 +19,15 @@ class DJTweetsVC: DJBaseTableVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        self.loadTweets()
+        //搜索
+//        self.actionCustomLeftBtnWithNrlImage(nil, htlImage: nil, title: "搜索", action: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
+        
+    }
+    
+    func initUI() {
         self.view.backgroundColor = UIColor.whiteColor()
         self.navigationItem.title = "笔记"
         self.btnAdd = DJTheme.getIconFont("\u{e605}", size: 48.0)
@@ -35,16 +45,10 @@ class DJTweetsVC: DJBaseTableVC {
         let tapAdd = UITapGestureRecognizer(target: self, action: "newTweet:")
         self.btnAdd.addGestureRecognizer(tapAdd)
         
-        self.loadTweets()
-        //搜索
-//        self.actionCustomLeftBtnWithNrlImage(nil, htlImage: nil, title: "搜索", action: <#T##(() -> Void)?##(() -> Void)?##() -> Void#>)
-        //设置
         self.actionCustomRightBtnWithNrlImage("\u{e60c}", htlImage: nil, title: nil) {[weak self] in
             let meVc = DJMeVC()
             self!.navigationController?.pushViewController(meVc, animated: true)
         }
-
-
     }
     
     func newTweet(sender:UITapGestureRecognizer) {
@@ -93,6 +97,9 @@ class DJTweetsVC: DJBaseTableVC {
             return arr.count
         }
         return 0
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = MJRefreshNormalHeader
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let identifier = "DJTweetCell"
