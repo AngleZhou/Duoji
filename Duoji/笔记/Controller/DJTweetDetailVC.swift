@@ -38,21 +38,26 @@ class DJTweetDetailVC: DJBaseVC {
     }
     
     func addbtnSave()->UIBarButtonItem {
-        return UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: "saveTweet")
+        return UIBarButtonItem(title: "保存", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(DJTweetDetailVC.saveTweet))
     }
     func saveTweet() {
         self.showLoading()
         if self.isNew {
             DJTweetsModel.createTweet(self.textView!.text!, success: { [weak self](result: [String : AnyObject]?) -> Void in
                 print(result)
+                let model = DJBaseModel(dictionary: result)
                 self?.hideLoading()
-                if let result = result {
-                    let data = result["data"] as! NSDictionary
+                if model.success == 1 {
+                    let data = result!["data"] as! NSDictionary
                     let tweet = DJTweet.init(dictionary: data as [NSObject : AnyObject])
                     self?.delegate?.DJTweetReturn(tweet)
                     self?.navigationController?.popViewControllerAnimated(true)
                 }
-                
+                else {
+                    TOAST_MSG(model.error_msg!)
+                    self?.hideLoading()
+                }
+            
                 }, failure: { [weak self](requestErr) -> Void in
                     TOAST_ERROR(requestErr!)
                     self?.hideLoading()
@@ -60,9 +65,17 @@ class DJTweetDetailVC: DJBaseVC {
         }
         else {
             DJTweetsModel.updateTweet(uuid: self.tweet!.uuid, content: self.textView!.text!, success: { [weak self](result) -> Void in
-                self!.tweet!.content = self!.textView!.text!
-                self?.hideLoading()
-                self?.navigationController?.popViewControllerAnimated(true)
+                let model = DJBaseModel(dictionary: result)
+                if model.success == 1 {
+                    self!.tweet!.content = self!.textView!.text!
+                    self?.hideLoading()
+                    self?.navigationController?.popViewControllerAnimated(true)
+                }
+                else {
+                    TOAST_MSG(model.error_msg!)
+                    self?.hideLoading()
+                }
+                
                 }, failure: {[weak self] (requestErr) -> Void in
                     TOAST_ERROR(requestErr!)
                     self?.hideLoading()
@@ -70,7 +83,7 @@ class DJTweetDetailVC: DJBaseVC {
         }
     }
     func addbtnDelete()->UIBarButtonItem {
-        return UIBarButtonItem(title: "删除", style: UIBarButtonItemStyle.Plain, target: self, action: "deleteTweet")
+        return UIBarButtonItem(title: "删除", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(DJTweetDetailVC.deleteTweet))
     }
     func deleteTweet() {
         self.showLoading()

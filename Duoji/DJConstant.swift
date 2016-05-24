@@ -15,7 +15,7 @@ let kDJSideX: CGFloat         = 18
 let kDJScreenWidth            = UIScreen.mainScreen().bounds.size.width
 let kDJScreenHeight           = UIScreen.mainScreen().bounds.size.height
 let kDJTableViewSpace:CGFloat = 10
-let kDJButtonHeight: CGFloat  = 44
+let kDJButtonHeight: CGFloat  = 50
 let kDJLineSpace: CGFloat     = 5
 
 let kNotifyBadNetwork = "kNotifyBadNetwork"
